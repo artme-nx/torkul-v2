@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Torkul — Konoba i vinski podrum · Sveti Filip i Jakov</title>
+<meta name="description" content="Torkul — dalmatinska konoba i vinski podrum u Svetom Filipu i Jakovu. Maslinovo ulje, domaće vino, riba s gradela i janjetina ispod peke pri svjetlu uljanice." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#16100F;
+    --bg-2:#1E1715;
+    --bg-3:#241B18;
+    --olive:#7E8B54;
+    --olive-lt:#A4AE7A;
+    --brass:#C79A4B;
+    --brass-lt:#E0BE76;
+    --wine:#7C2A33;
+    --cream:#EFE7D6;
+    --cream-dim:#B9AE9B;
+    --line:rgba(199,154,75,.18);
+    --maxw:1160px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);color:var(--cream);
+    font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.75;
+    overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  }
+  body.no-scroll{overflow:hidden}
+  h1,h2,h3,.serif{font-family:'EB Garamond',serif;font-weight:500;line-height:1.14}
+  .ss{font-family:'Source Serif 4',serif}
+  .italic{font-style:italic}
+  img{display:block;width:100%;height:100%;object-fit:cover}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 30px}
+  .eyebrow{font-size:.7rem;letter-spacing:.36em;text-transform:uppercase;color:var(--brass);font-weight:500}
+  .pad{padding:120px 0}
+  .pad-s{padding:80px 0}
+
+  /* HEADER */
+  header{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+    padding:20px 30px;transition:background .5s,padding .5s,box-shadow .5s}
+  header.scrolled{background:rgba(22,16,15,.85);backdrop-filter:blur(12px);padding:13px 30px;box-shadow:0 1px 0 var(--line)}
+  .brand{font-family:'EB Garamond',serif;font-size:1.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cream)}
+  .brand small{display:block;font-family:'DM Sans';font-size:.55rem;letter-spacing:.4em;color:var(--brass);margin-top:1px}
+  nav.links{display:flex;gap:32px;align-items:center}
+  nav.links a{font-size:.82rem;letter-spacing:.08em;color:var(--cream-dim);transition:color .3s}
+  nav.links a:hover{color:var(--brass-lt)}
+  .btn-res{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--brass);
+    color:var(--brass-lt);padding:11px 22px;border-radius:1px;cursor:pointer;background:none;font-family:'DM Sans';
+    transition:background .35s,color .35s}
+  .btn-res:hover{background:var(--brass);color:var(--bg)}
+  .menu-toggle{display:none;background:none;border:none;color:var(--cream);font-size:1.5rem;cursor:pointer}
+
+  /* HERO */
+  .hero{position:relative;height:100vh;min-height:620px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:-2;overflow:hidden}
+  .hero-bg img{transform:scale(1.12);animation:breathe 18s ease-in-out infinite alternate}
+  @keyframes breathe{from{transform:scale(1.08)}to{transform:scale(1.2)}}
+  .hero-bg::after{content:"";position:absolute;inset:0;
+    background:radial-gradient(ellipse at center,rgba(22,16,15,.32) 0%,rgba(22,16,15,.72) 70%,rgba(22,16,15,.94) 100%)}
+  .hero-inner{position:relative;z-index:2;padding:0 24px;max-width:920px}
+  .hero .eyebrow{color:var(--brass-lt)}
+  .hero h1{font-size:clamp(2.8rem,8vw,6.4rem);color:var(--cream);margin:.22em 0 .3em;letter-spacing:.01em}
+  .hero h1 .w{display:inline-block;opacity:0;transform:translateY(18px) }
+  .hero h1 .italic{color:var(--brass-lt);font-style:italic}
+  .hero .tag{font-family:'Source Serif 4',serif;font-size:clamp(1.05rem,2.1vw,1.4rem);color:var(--cream-dim);max-width:46ch;margin:0 auto;font-weight:400}
+  .hero .lamp{position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 50% 42%,rgba(199,154,75,.16),transparent 45%);pointer-events:none}
+  .scrollcue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;color:var(--cream-dim);
+    font-size:.64rem;letter-spacing:.3em;text-transform:uppercase}
+  .scrollcue span{display:block;width:1px;height:40px;background:var(--brass);opacity:.5;margin:8px auto 0}
+
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity 1.1s cubic-bezier(.22,.61,.36,1),transform 1.1s cubic-bezier(.22,.61,.36,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* INTRO / MANIFEST */
+  .intro{background:var(--bg);text-align:center}
+  .intro .big{font-family:'EB Garamond',serif;font-size:clamp(1.8rem,4.2vw,3rem);color:var(--cream);max-width:20ch;margin:.4em auto .55em;line-height:1.25}
+  .intro .big em{color:var(--brass-lt);font-style:italic}
+  .intro p{max-width:58ch;margin:0 auto;color:var(--cream-dim);font-size:1.05rem}
+  .intro .seal{margin:0 auto 8px;width:54px;height:54px;color:var(--brass)}
+
+  /* FEATURE SPLIT (oil & wine) */
+  .duo{background:var(--bg-2)}
+  .duo-grid{display:grid;grid-template-columns:1fr 1fr}
+  .duo-cell{position:relative;min-height:62vh;display:flex;align-items:flex-end;overflow:hidden}
+  .duo-cell img{position:absolute;inset:0;z-index:0;transition:transform 1.6s ease}
+  .duo-cell:hover img{transform:scale(1.06)}
+  .duo-cell::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(15,10,9,.92),rgba(15,10,9,.15))}
+  .duo-cell .t{position:relative;z-index:2;padding:46px 42px}
+  .duo-cell .eyebrow{margin-bottom:8px}
+  .duo-cell h3{font-size:clamp(1.6rem,3vw,2.3rem);color:var(--cream);margin-bottom:.4em}
+  .duo-cell p{color:var(--cream-dim);max-width:40ch;font-size:.98rem}
+
+  /* TIMELINE (heritage) */
+  .timeline{background:var(--bg)}
+  .tl-head{text-align:center;margin-bottom:64px}
+  .tl-head h2{font-size:clamp(2rem,4.4vw,3.1rem);color:var(--cream);margin:.3em 0 .2em}
+  .tl-head p{color:var(--cream-dim);max-width:46ch;margin:0 auto;font-family:'Source Serif 4',serif}
+  .tl{position:relative;max-width:760px;margin:0 auto;padding-left:34px}
+  .tl::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:1px;background:linear-gradient(180deg,var(--brass),rgba(199,154,75,.1))}
+  .tl-item{position:relative;padding:0 0 46px 26px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-item::before{content:"";position:absolute;left:-31px;top:7px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:1.5px solid var(--brass)}
+  .tl-item .yr{font-family:'EB Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--brass-lt);letter-spacing:.04em}
+  .tl-item h4{font-family:'EB Garamond',serif;font-size:1.5rem;color:var(--cream);margin:2px 0 6px}
+  .tl-item p{color:var(--cream-dim);font-size:.98rem}
+
+  /* MENU */
+  .menu{background:var(--bg-3)}
+  .menu .head{text-align:center;margin-bottom:56px}
+  .menu .eyebrow{display:block;margin-bottom:10px}
+  .menu h2{font-size:clamp(2rem,4.4vw,3.1rem);color:var(--cream);margin-bottom:.2em}
+  .menu .sub{color:var(--cream-dim);font-family:'Source Serif 4',serif;font-style:italic;max-width:50ch;margin:0 auto}
+  .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 64px}
+  .mcat{margin-bottom:34px}
+  .mcat h4{font-family:'EB Garamond',serif;font-style:italic;font-size:1.45rem;color:var(--brass-lt);
+    margin-bottom:16px;padding-bottom:9px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+  .mcat h4::before{content:"";width:14px;height:14px;border:1px solid var(--brass);border-radius:50%;flex:none;opacity:.7}
+  .mitem{margin-bottom:18px}
+  .mitem .nm{font-family:'EB Garamond',serif;font-size:1.3rem;color:var(--cream)}
+  .mitem .ds{font-size:.9rem;color:var(--cream-dim);margin-top:2px;line-height:1.55}
+  .menu-note{text-align:center;margin-top:40px;color:#8C8170;font-size:.84rem;letter-spacing:.04em}
+
+  /* QUOTE */
+  .quote{background:var(--wine);text-align:center}
+  .quote blockquote{font-family:'EB Garamond',serif;font-style:italic;font-size:clamp(1.7rem,3.8vw,2.7rem);
+    line-height:1.4;color:var(--cream);max-width:22ch;margin:0 auto}
+  .quote cite{display:block;margin-top:22px;font-style:normal;font-family:'DM Sans';font-size:.72rem;
+    letter-spacing:.28em;text-transform:uppercase;color:rgba(239,231,214,.7)}
+
+  /* GALLERY */
+  .gallery{background:var(--bg)}
+  .gallery .head{text-align:center;margin-bottom:48px}
+  .gallery h2{font-size:clamp(2rem,4.4vw,3rem);color:var(--cream);margin:.3em 0 .2em}
+  .gallery .head p{color:var(--cream-dim);max-width:44ch;margin:0 auto;font-family:'Source Serif 4',serif}
+  .gal-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:12px}
+  .gal-grid figure{position:relative;overflow:hidden}
+  .gal-grid img{transition:transform 1.3s ease;filter:brightness(.9)}
+  .gal-grid figure:hover img{transform:scale(1.07);filter:brightness(1)}
+  .gal-grid figcaption{position:absolute;left:0;right:0;bottom:0;padding:13px 15px;color:var(--cream);
+    font-family:'EB Garamond',serif;font-style:italic;font-size:1.02rem;
+    background:linear-gradient(0deg,rgba(10,7,6,.8),transparent);opacity:0;transform:translateY(8px);transition:.4s}
+  .gal-grid figure:hover figcaption{opacity:1;transform:none}
+  .gal-grid .tall{grid-row:span 2}
+  .gal-grid .wide{grid-column:span 2}
+
+  /* VISIT */
+  .visit{background:var(--bg-2)}
+  .visit-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;align-items:stretch}
+  .visit h2{font-size:clamp(1.9rem,4vw,2.7rem);color:var(--cream);margin-bottom:.5em}
+  .info-block{margin-bottom:26px}
+  .info-block .lbl{font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:var(--brass);margin-bottom:6px}
+  .info-block p{color:var(--cream-dim)}
+  .info-block a{color:var(--brass-lt)}
+  .hours-line{display:flex;justify-content:space-between;max-width:340px;padding:7px 0;border-bottom:1px dotted var(--line)}
+  .hours-line span:first-child{color:var(--cream)}
+  .hours-line span:last-child{color:var(--cream-dim)}
+  .map-frame{position:relative;min-height:400px;overflow:hidden;border:1px solid var(--line)}
+  .map-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:invert(.9) hue-rotate(180deg) saturate(.7) brightness(.95)}
+
+  /* RESERVATION PANEL */
+  .res-overlay{position:fixed;inset:0;z-index:90;background:rgba(10,7,6,.6);opacity:0;visibility:hidden;transition:.4s}
+  .res-overlay.open{opacity:1;visibility:visible}
+  .res-panel{position:fixed;top:0;right:0;bottom:0;z-index:100;width:min(440px,92vw);background:var(--bg-3);
+    transform:translateX(100%);transition:transform .5s cubic-bezier(.5,0,.1,1);padding:40px 38px;overflow-y:auto;
+    box-shadow:-20px 0 60px rgba(0,0,0,.5)}
+  .res-panel.open{transform:none}
+  .res-panel .x{position:absolute;top:20px;right:24px;background:none;border:none;color:var(--cream-dim);font-size:1.6rem;cursor:pointer;line-height:1}
+  .res-panel .eyebrow{display:block;margin-bottom:8px}
+  .res-panel h3{font-family:'EB Garamond',serif;font-size:2rem;color:var(--cream);margin-bottom:.4em}
+  .res-panel p{color:var(--cream-dim);font-size:.95rem;margin-bottom:24px}
+  .res-panel label{display:block;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin:14px 0 6px}
+  .res-panel input,.res-panel select{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--cream);
+    padding:12px 14px;font-family:'DM Sans';font-size:.95rem;border-radius:1px}
+  .res-panel input:focus,.res-panel select:focus{outline:none;border-color:var(--brass)}
+  .res-panel .submit{width:100%;margin-top:24px;background:var(--brass);color:var(--bg);border:none;padding:15px;
+    font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans';transition:background .3s}
+  .res-panel .submit:hover{background:var(--brass-lt)}
+  .res-panel .call{display:block;text-align:center;margin-top:18px;color:var(--cream-dim);font-size:.88rem}
+  .res-panel .call a{color:var(--brass-lt)}
+
+  /* FOOTER */
+  footer{background:var(--bg);color:var(--cream);padding:80px 0 36px;text-align:center;border-top:1px solid var(--line)}
+  footer .brand{font-size:2rem;margin-bottom:8px}
+  footer .ftag{font-family:'Source Serif 4',serif;font-style:italic;font-size:1.15rem;color:var(--cream-dim);max-width:36ch;margin:14px auto 30px}
+  footer .frow{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;font-size:.88rem}
+  footer .frow a{color:var(--cream-dim);transition:color .3s}
+  footer .frow a:hover{color:var(--brass-lt)}
+  footer .fline{height:1px;background:var(--line);max-width:340px;margin:0 auto 24px}
+  footer .copy{font-size:.74rem;letter-spacing:.06em;color:#7C7261}
+
+  @media(max-width:880px){
+    nav.links{display:none}
+    .menu-toggle{display:block}
+    .duo-grid{grid-template-columns:1fr}
+    .duo-cell{min-height:52vh}
+    .menu-grid{grid-template-columns:1fr;gap:0}
+    .visit-grid{grid-template-columns:1fr;gap:40px}
+    .gal-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px}
+    .gal-grid .wide{grid-column:span 2}
+    .pad{padding:84px 0}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1!important;transform:none!important;transition:none}
+    .hero h1 .w{opacity:1!important;transform:none!important}
+    .hero-bg img{animation:none;transform:scale(1.1)}
+    .duo-cell img,.gal-grid img{transition:none}
+    *{scroll-behavior:auto!important}
+  }
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a href="#top" class="brand">Torkul<small>Konoba · Vinski podrum</small></a>
+  <nav class="links">
+    <a href="#nasljedje">Naslijeđe</a>
+    <a href="#jelovnik">Jelovnik</a>
+    <a href="#galerija">Galerija</a>
+    <a href="#posjeta">Posjeta</a>
+    <button class="btn-res" data-res>Rezerviraj stol</button>
+  </nav>
+  <button class="menu-toggle" id="mtoggle" aria-label="Rezerviraj">☰</button>
+</header>
+
+<a id="top"></a>
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?q=80&w=2000&auto=format&fit=crop" alt="Tamni vinski podrum uz svjetlo uljanice" />
+  </div>
+  <div class="lamp"></div>
+  <div class="hero-inner">
+    <p class="eyebrow">Sveti Filip i Jakov · Dalmacija</p>
+    <h1 id="heroTitle"><span class="w">Vino,</span> <span class="w">ulje</span> <span class="w">i</span> <span class="w italic">vatra</span></h1>
+    <p class="tag">Konoba i vinski podrum nazvan po staroj preši — torkulu. Pri svjetlu uljanice toči se domaće vino, a s gradela stiže ono što su more i polje darovali.</p>
+  </div>
+  <div class="scrollcue">Siđite u podrum<span></span></div>
+</section>
+
+<!-- INTRO -->
+<section class="intro pad">
+  <div class="wrap reveal">
+    <svg class="seal" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.3">
+      <circle cx="30" cy="30" r="26"/><path d="M30 14 v32 M18 22 c8 4 16 4 24 0 M18 38 c8-4 16-4 24 0"/>
+    </svg>
+    <p class="eyebrow">Torkul — stara preša</p>
+    <div class="big">Ime nam je dala <em>preša</em> koja je iz maslina cijedila ulje, a iz grožđa vino.</div>
+    <p>Torkul je teški drveni vijak — srce svakoga dalmatinskog gospodarstva. Po njemu nosimo ime jer iz iste te zemlje, istim strpljenjem, i danas radimo ono najvažnije: ulje, vino i jela koja okupljaju ljude oko stola.</p>
+  </div>
+</section>
+
+<!-- DUO: oil & wine -->
+<section class="duo">
+  <div class="duo-grid">
+    <div class="duo-cell reveal">
+      <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?q=80&w=1300&auto=format&fit=crop" alt="Maslinovo ulje se toči" />
+      <div class="t">
+        <p class="eyebrow">Maslinovo ulje</p>
+        <h3>Zlato našega maslinika</h3>
+        <p>Ručno brano u kasnu jesen, prešano istoga dana. Gusto, peckavo, zeleno — temelj gotovo svakoga jela koje vam donosimo.</p>
+      </div>
+    </div>
+    <div class="duo-cell reveal">
+      <img src="https://images.unsplash.com/photo-1474722883778-792e7990302f?q=80&w=1300&auto=format&fit=crop" alt="Crveno vino u podrumu" />
+      <div class="t">
+        <p class="eyebrow">Domaće vino</p>
+        <h3>Kapljice iz našega podruma</h3>
+        <p>Plavina, babić, debit i maraština — iz vlastitoga vinograda i od provjerenih susjeda. Vino kod nas nije dodatak, nego sudionik objeda.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline pad" id="nasljedje">
+  <div class="wrap">
+    <div class="tl-head reveal">
+      <p class="eyebrow">Naslijeđe</p>
+      <h2>Generacije oko iste preše</h2>
+      <p>Priča o Torkulu nije počela jelovnikom, nego zemljom, prešom i strpljenjem.</p>
+    </div>
+    <div class="tl">
+      <div class="tl-item reveal"><div class="yr">Nekad davno</div><h4>Preša u kamenom konobu</h4><p>U starom konobu, ispod kuće, drveni torkul cijedio je ulje i vino za cijelu obitelj i susjedstvo. Oko njega se okupljalo, radilo i slavilo.</p></div>
+      <div class="tl-item reveal"><div class="yr">Maslinik i vinograd</div><h4>Zemlja iznad mora</h4><p>Na kamenitim terasama iznad Svetoga Filipa i Jakova rasli su maslinik i vinograd — neka stabla i danas hrane našu kuhinju.</p></div>
+      <div class="tl-item reveal"><div class="yr">S koljena na koljeno</div><h4>Recepti koji se pamte</h4><p>Janjetina ispod peke, brodet, pašticada i rožata prenosili su se usmeno, s none na majku, s majke na nas.</p></div>
+      <div class="tl-item reveal"><div class="yr">Danas</div><h4>Konoba Torkul</h4><p>Otvorili smo vrata gostima, ali nismo promijenili put: od preše, preko zemlje i mora, do vašega stola.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu pad" id="jelovnik">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">Jelovnik</span>
+      <h2>S polja i s mora</h2>
+      <p class="sub">Sezonska dalmatinska kuhinja koja počinje od ulja i vina, a završava na žaru i ispod peke.</p>
+    </div>
+    <div class="menu-grid reveal">
+      <div>
+        <div class="mcat">
+          <h4>Za početak</h4>
+          <div class="mitem"><div class="nm">Maslinovo ulje i topli kruh</div><div class="ds">Naše rano berbano ulje, krupna morska sol i kruh ispod peke.</div></div>
+          <div class="mitem"><div class="nm">Pršut, ovčji sir i masline</div><div class="ds">Pršut sušen na buri, zreli sir i naše marinirane masline.</div></div>
+          <div class="mitem"><div class="nm">Marinirani inćuni</div><div class="ds">Slani filet, kapari, peršin i kapljica octa od domaćega vina.</div></div>
+        </div>
+        <div class="mcat">
+          <h4>S mora</h4>
+          <div class="mitem"><div class="nm">Riba s gradela</div><div class="ds">Svježi ulov dana s žara, preliven uljem, češnjakom i peršinom.</div></div>
+          <div class="mitem"><div class="nm">Brodet s palentom</div><div class="ds">Bijela riba sporo kuhana u domaćoj rajčici i vinu.</div></div>
+          <div class="mitem"><div class="nm">Crni rižot od sipe</div><div class="ds">Kremast, mastan od svoga ulja, s mrvom mladoga sira.</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="mcat">
+          <h4>S polja i žara</h4>
+          <div class="mitem"><div class="nm">Janjetina ispod peke</div><div class="ds">Pečena polako pod pekom, s krumpirom koji upija sokove. Uz najavu.</div></div>
+          <div class="mitem"><div class="nm">Pašticada s njokima</div><div class="ds">Govedina marinirana u vinu, kuhana satima, s domaćim njokima.</div></div>
+          <div class="mitem"><div class="nm">Povrće s vrta na žaru</div><div class="ds">Sezonsko povrće s gradela, ulje i ružmarin s našega vrta.</div></div>
+        </div>
+        <div class="mcat">
+          <h4>Za kraj · uz vino</h4>
+          <div class="mitem"><div class="nm">Rožata po starinski</div><div class="ds">Krema s karamelom i mirisom ruže, kao kod none.</div></div>
+          <div class="mitem"><div class="nm">Smokve u crnom vinu</div><div class="ds">Sušene smokve kuhane u vinu i začinima, s kapljicom ulja.</div></div>
+          <div class="mitem"><div class="nm">Rakije i prošek</div><div class="ds">Travarica, smokovača i desertni prošek — kraj objeda kakav dolikuje.</div></div>
+        </div>
+      </div>
+    </div>
+    <p class="menu-note">Jelovnik je sezonski i ovisi o dnevnom ulovu i berbi. Za janjetinu ispod peke molimo najavu unaprijed.</p>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote pad-s">
+  <div class="wrap reveal">
+    <blockquote>„Dobro vino i dobro ulje ne traže riječi — traže vrijeme.”</blockquote>
+    <cite>— Konoba Torkul</cite>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery pad" id="galerija">
+  <div class="wrap">
+    <div class="head reveal">
+      <p class="eyebrow">Galerija</p>
+      <h2>Pri svjetlu uljanice</h2>
+      <p>Podrum, preša, vino i jela koja nastaju iz zemlje i mora.</p>
+    </div>
+    <div class="gal-grid reveal">
+      <figure class="tall"><img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=1000&auto=format&fit=crop" alt="Stara drvena preša"><figcaption>Stari torkul</figcaption></figure>
+      <figure class="wide"><img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?q=80&w=1400&auto=format&fit=crop" alt="Vinski podrum s bačvama"><figcaption>Naš podrum</figcaption></figure>
+      <figure><img src="https://images.unsplash.com/photo-1474722883778-792e7990302f?q=80&w=900&auto=format&fit=crop" alt="Čaša crnog vina"><figcaption>Domaća kapljica</figcaption></figure>
+      <figure><img src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?q=80&w=900&auto=format&fit=crop" alt="Riba na žaru"><figcaption>S gradela</figcaption></figure>
+      <figure class="wide"><img src="https://images.unsplash.com/photo-1474440692490-2e83ae13ba29?q=80&w=1400&auto=format&fit=crop" alt="Maslinik u svjetlu"><figcaption>Naš maslinik</figcaption></figure>
+      <figure><img src="https://images.unsplash.com/photo-1559561853-08451507cbe7?q=80&w=900&auto=format&fit=crop" alt="Domaći kruh i ulje"><figcaption>Kruh i ulje</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section class="visit pad" id="posjeta">
+  <div class="wrap">
+    <div class="visit-grid">
+      <div class="reveal">
+        <p class="eyebrow">Posjeta</p>
+        <h2>Sveti Filip i Jakov</h2>
+        <div class="info-block">
+          <div class="lbl">Adresa</div>
+          <p>Sveti Filip i Jakov, Zadarska županija<br>Dalmatinska rivijera, nadomak Biograda na Moru</p>
+        </div>
+        <div class="info-block">
+          <div class="lbl">Rezervacije</div>
+          <p><a href="tel:+385913323811">+385 91 332 3811</a><br><a href="mailto:torkulfj@gmail.com">torkulfj@gmail.com</a></p>
+        </div>
+        <div class="info-block">
+          <div class="lbl">Radno vrijeme</div>
+          <div class="hours-line"><span>Ponedjeljak — Petak</span><span>12:00 — 23:00</span></div>
+          <div class="hours-line"><span>Subota — Nedjelja</span><span>11:00 — 24:00</span></div>
+          <div class="hours-line"><span>Izvan sezone</span><span>uz najavu</span></div>
+        </div>
+        <button class="btn-res" data-res style="margin-top:8px">Rezerviraj stol</button>
+      </div>
+      <div class="map-frame reveal">
+        <iframe src="https://maps.google.com/maps?q=Torkul+Sveti+Filip+i+Jakov&output=embed" loading="lazy" title="Torkul na karti — Sveti Filip i Jakov"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">Torkul<small style="display:block;font-family:'DM Sans';font-size:.55rem;letter-spacing:.4em;color:var(--brass);margin-top:2px">Konoba · Vinski podrum</small></div>
+    <p class="ftag">Vino, ulje i vatra — okus dalmatinske zemlje u Svetom Filipu i Jakovu.</p>
+    <div class="frow">
+      <a href="#nasljedje">Naslijeđe</a>
+      <a href="#jelovnik">Jelovnik</a>
+      <a href="#galerija">Galerija</a>
+      <a href="tel:+385913323811">+385 91 332 3811</a>
+      <a href="mailto:torkulfj@gmail.com">torkulfj@gmail.com</a>
+    </div>
+    <div class="fline"></div>
+    <p class="copy">© 2026 Torkul · Sveti Filip i Jakov · Sva prava pridržana</p>
+  </div>
+</footer>
+
+<!-- RESERVATION PANEL -->
+<div class="res-overlay" id="resOverlay"></div>
+<aside class="res-panel" id="resPanel" aria-hidden="true">
+  <button class="x" id="resClose" aria-label="Zatvori">×</button>
+  <span class="eyebrow">Rezervacija</span>
+  <h3>Rezervirajte stol</h3>
+  <p>Ostavite nam svoje podatke i javit ćemo vam se s potvrdom. Za janjetinu ispod peke molimo najavu unaprijed.</p>
+  <form id="resForm">
+    <label for="rn">Ime i prezime</label>
+    <input id="rn" name="ime" type="text" required placeholder="Vaše ime">
+    <label for="rp">Telefon</label>
+    <input id="rp" name="tel" type="tel" required placeholder="+385 ...">
+    <label for="rd">Datum</label>
+    <input id="rd" name="datum" type="date" required>
+    <label for="rg">Broj gostiju</label>
+    <select id="rg" name="gosti">
+      <option>2 osobe</option><option>3 osobe</option><option>4 osobe</option>
+      <option>5 — 6 osoba</option><option>7+ osoba</option>
+    </select>
+    <button class="submit" type="submit">Pošalji upit</button>
+  </form>
+  <span class="call">ili nazovite <a href="tel:+385913323811">+385 91 332 3811</a></span>
+</aside>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.13/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Header
+  var header=document.getElementById('header');
+  function onScroll(){ if(window.scrollY>40) header.classList.add('scrolled'); else header.classList.remove('scrolled'); }
+  window.addEventListener('scroll',onScroll); onScroll();
+
+  // Reservation panel
+  var overlay=document.getElementById('resOverlay'), panel=document.getElementById('resPanel');
+  function openRes(){ overlay.classList.add('open'); panel.classList.add('open'); panel.setAttribute('aria-hidden','false'); document.body.classList.add('no-scroll'); if(window.__lenis) window.__lenis.stop(); }
+  function closeRes(){ overlay.classList.remove('open'); panel.classList.remove('open'); panel.setAttribute('aria-hidden','true'); document.body.classList.remove('no-scroll'); if(window.__lenis) window.__lenis.start(); }
+  document.querySelectorAll('[data-res]').forEach(function(b){ b.addEventListener('click',openRes); });
+  document.getElementById('resClose').addEventListener('click',closeRes);
+  overlay.addEventListener('click',closeRes);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeRes(); });
+  document.getElementById('mtoggle').addEventListener('click',openRes);
+  document.getElementById('resForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    panel.innerHTML='<span class="eyebrow">Hvala</span><h3 style="margin-top:8px">Upit zaprimljen</h3><p>Javit ćemo vam se u najkraćem roku s potvrdom rezervacije. Za hitno, nazovite <a href="tel:+385913323811" style="color:var(--brass-lt)">+385 91 332 3811</a>.</p>';
+  });
+
+  if(reduce){
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});
+    document.querySelectorAll('.hero h1 .w').forEach(function(w){w.style.opacity=1;w.style.transform='none';});
+    return;
+  }
+
+  // Lenis snappy
+  var lenis=new Lenis({lerp:0.2, wheelMultiplier:1, smoothWheel:true, syncTouch:false});
+  window.__lenis=lenis;
+  function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+
+  if(window.gsap && window.ScrollTrigger){
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Hero word reveal
+    gsap.to('.hero h1 .w',{opacity:1,y:0,duration:1,ease:'power3.out',stagger:0.13,delay:0.25});
+
+    // Reveal on scroll
+    document.querySelectorAll('.reveal').forEach(function(el){
+      ScrollTrigger.create({trigger:el,start:'top 86%',once:true,onEnter:function(){el.classList.add('in');}});
+    });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});
+    document.querySelectorAll('.hero h1 .w').forEach(function(w){w.style.opacity=1;w.style.transform='none';});
+  }
+
+  // Smooth anchors
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      var id=a.getAttribute('href');
+      if(id.length>1){ var t=document.querySelector(id); if(t){ e.preventDefault(); lenis.scrollTo(t,{offset:-60}); } }
+    });
+  });
+})();
+</script>
+</body>
+</html>
